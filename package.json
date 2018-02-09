@@ -1,0 +1,33 @@
+{
+  "name": "taqz",
+  "version": "1.0.0",
+  "description": "Twitterに投稿したりなどしたいアプリです",
+  "main": "index.js",
+  "scripts": {
+    "test": "node scripts/tweet_simple",
+    "init": "node scripts/init",
+    "account": "node scripts/account",
+    "list": "node scripts/list",
+    "tweet-simply": "node scripts/tweet_simple",
+    "help": "node scripts/help"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tamaina/taqz.git"
+  },
+  "author": "tamaina <tamaina@hotmail.co.jp> (https://tmin.cf/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tamaina/taqz/issues"
+  },
+  "homepage": "https://github.com/tamaina/taqz#readme",
+  "dependencies": {
+    "extend": "^3.0.1",
+    "file-exists": "^5.0.1",
+    "inquirer": "^5.1.0",
+    "minimist": "^1.2.0",
+    "opener": "^1.4.3",
+    "request": "^2.83.0",
+    "twitter": "^1.7.1"
+  }
+}
