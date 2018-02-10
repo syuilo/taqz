@@ -9,7 +9,7 @@ TwitterをいじいじするNode.jsアプリ
   * `init`      ･･････ いちばんはじめに実行するコマンドです。
   * `account`   ･･････ 操作したいアカウントを追加するときに実行するコマンドです。
   * `list`      ･･････ 操作可能なアカウントIDを表示します。
-  * `tweet-simply -- (options)`  
+  * `tweet-simply (options)`  
             ･･････ 単純にツイートできます。
     * (options)
       *  `--id=, --screen_name=, -n <screen_name>`  
@@ -29,7 +29,7 @@ TwitterをいじいじするNode.jsアプリ
   * `init`      ･･････ いちばんはじめに実行するコマンドです。
   * `account`   ･･････ 操作したいアカウントを追加するときに実行するコマンドです。
   * `list`      ･･････ 操作可能なアカウントIDを表示します。
-  * `tweet-simply -- (options)`  
+  * `tweet-simply (options)`  
             ･･････ 単純にツイートできます。
     * (options)
       *  `--id=, --username=, -n <username>`  
