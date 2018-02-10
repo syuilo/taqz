@@ -7,9 +7,10 @@ const      inquirer = require('inquirer')
 
 const readFile = promisify(fs.readFile)
 
-const taqz = require('../taqz.json')
+const taqz = require('./taqz.json')
 
-let screen_name = ''
+if(!taqz) throw Error('初期化されていません。 node twitter/init を実行し、初期化してください。')
+else if(taqz.accounts.length == 0) throw Error('アカウントがありません。node twitter/account を実行し、アカウントを登録してください。')
 
 const argv = minimist(process.argv.slice(1))
 
@@ -36,9 +37,9 @@ async function get_text(argv, taqz){
     if(argv.file && require('file-exists')(argv.file)) return readFile(argv.file, 'utf8')
     if(argv.path && require('file-exists')(argv.path)) return readFile(argv.path, 'utf8')
     if(argv.f && require('file-exists')(argv.f)) return readFile(argv.f, 'utf8')
-    else if(argv.text) return argv.text
-    else if(argv.body) return argv.body
-    else if(argv.s) return argv.s
+    else if(argv.text) return argv.text.replace('\\n', '\n')
+    else if(argv.body) return argv.body.replace('\\n', '\n')
+    else if(argv.s) return argv.s.replace('\\n', '\n')
     else {
         let form = [
             {
@@ -49,7 +50,7 @@ async function get_text(argv, taqz){
         ]
         return inquirer.prompt(form)
         .then(as => {
-            return as.text
+            return as.text.replace('\\n', '\n')
         })
         .catch(err => { throw err })
     }
@@ -68,6 +69,7 @@ get_screen_name(argv, taqz)
     if(accounts.length == 0) throw Error(`該当するアカウントはひとつもありませんでした。`)
     else return accounts
 }).then(async accounts => {
+    const status = await get_text(argv, taqz)
     for(n = 0; n < accounts.length; n++){
         const account = accounts[n]
         const client = new Twitter({
@@ -76,15 +78,13 @@ get_screen_name(argv, taqz)
             "access_token_key" : account.token,
             "access_token_secret": account.token_secret
         })
-        const status = await get_text(argv, taqz)
         client.post('statuses/update', {status: status}, (err) => {
             if(err) throw err
             else{
-                console.log(`✔ ツイートしました。 @${account.screen_name}`)
+                console.log(`\n✔ 投稿しました。 @${account.screen_name}`)
                 console.log(status)
             }
         })
     }
 })
 .catch(err => { throw err })
-

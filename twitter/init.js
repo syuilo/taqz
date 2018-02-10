@@ -16,7 +16,7 @@ let form = [
         message: 'Comsumer Secret:'
     }
 ]
-console.log('電話番号を認証したアカウントでログインした状態で https://apps.twitter.com/ にアクセスし、アプリを作成してくださいそして、以下の情報をコピペしてください。')
+console.log('\n電話番号を認証したアカウントでログインした状態で https://apps.twitter.com/ にアクセスし、アプリを作成してください。\nそして、以下の情報を貼り付けてください。')
 inquirer.prompt(form)
 .then(as => {
     let data = {
@@ -24,9 +24,9 @@ inquirer.prompt(form)
         consumer_secret: as.consumer_secret,
         accounts: []
     }
-    return writeFile('taqz.json', JSON.stringify(data), 'utf8', () => {
+    return writeFile('twitter/taqz.json', JSON.stringify(data), 'utf8', () => {
         console.log('taqz.jsonが作成されました。このファイルは絶対に誰にも見せないでください。')
-        console.log('npm run account を実行し、アカウントを追加してください。')
+        console.log('node twitter/account を実行し、アカウントを追加してください。\n')
     })
 })
 .catch(err => { throw err })

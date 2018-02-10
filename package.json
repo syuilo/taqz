@@ -4,12 +4,7 @@
   "description": "Twitterに投稿したりなどしたいアプリです",
   "main": "index.js",
   "scripts": {
-    "test": "node scripts/tweet_simple",
-    "init": "node scripts/init",
-    "account": "node scripts/account",
-    "list": "node scripts/list",
-    "tweet-simply": "node scripts/tweet_simple",
-    "help": "node scripts/help"
+    "test": "node twitter/tweet_simple"
   },
   "repository": {
     "type": "git",
