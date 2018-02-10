@@ -23,6 +23,7 @@
     "minimist": "^1.2.0",
     "opener": "^1.4.3",
     "request": "^2.83.0",
-    "twitter": "^1.7.1"
+    "twitter": "^1.7.1",
+    "websocket": "^1.0.25"
   }
 }
