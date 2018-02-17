@@ -1,5 +1,5 @@
 const       Twitter = require('twitter')
-module.exports = function(keys, status){
+module.exports = function(keys, status, account){
     const client = new Twitter(keys)
     client.post('statuses/update', {status: status}, (err) => {
         if(err) throw err

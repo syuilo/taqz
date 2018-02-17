@@ -24,14 +24,7 @@ require('../scripts/get_accounts')(argv, taqz, 'screen_name')
             "access_token_key" : account.token,
             "access_token_secret": account.token_secret
         }
-        require('./scripts/post')( client, status )
-        client.post('statuses/update', {status: status}, (err) => {
-            if(err) throw err
-            else{
-                console.log(`\n✔ 投稿しました。 @${account.screen_name}`)
-                console.log(status)
-            }
-        })
+        require('./scripts/tweet')( client, status, account )
     }
 })
 .catch(err => { throw err })

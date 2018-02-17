@@ -20,8 +20,8 @@ console.log('\n電話番号を認証したアカウントでログインした�
 inquirer.prompt(form)
 .then(as => {
     let data = {
-        consumer_key: as.consumer_key,
-        consumer_secret: as.consumer_secret,
+        consumer_key: as.consumer_key.trim(),
+        consumer_secret: as.consumer_secret.trim(),
         accounts: []
     }
     return writeFile('twitter/taqz.json', JSON.stringify(data), 'utf8', () => {
