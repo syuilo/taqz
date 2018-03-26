@@ -31,7 +31,7 @@ Misskey、TwitterおよびMastodonの、コマンドラインで動く簡単な�
   * `account`   ･･････ 操作したいアカウントを追加するときに実行するコマンドです。
   * `list`      ･･････ 操作可能なアカウントIDを表示します。
   * `post-simply (options)`  
-            ･･････ 単純にツイートできます。
+            ･･････ 単純に投稿できます。
     * (options)
       *  `--id=, --username=, -n <username>`  
             ユーザーネーム(ID)を事前に設定できます。
@@ -51,7 +51,7 @@ Misskey、TwitterおよびMastodonの、コマンドラインで動く簡単な�
   * `account`   ･･････ 操作したいアカウントを追加するときに実行するコマンドです。
   * `list`      ･･････ 操作可能なアカウントIDを表示します。
   * `toot-simply (options)`  
-            ･･････ 単純にツイートできます。
+            ･･････ 単純にトゥートできます。
     * (options)
       *  `--id=, --screem_name=, -n <username>`  
             ユーザーネーム(ID@インスタンスドメイン)を事前に設定できます。
