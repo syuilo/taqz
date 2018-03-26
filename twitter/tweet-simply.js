@@ -14,16 +14,15 @@ const argv = minimist(process.argv.slice(1))
 
 require('../scripts/get_accounts')(argv, taqz, 'screen_name')
 .then(async accounts => {
+    if(accounts.length > 1) console.log('複数のアカウントで同じツイートをすることは禁止されています。')
     const status = await require('../scripts/get_text')(argv, taqz)
-    for(n = 0; n < accounts.length; n++){
-        const account = accounts[n]
-        const client = {
-            "consumer_key" : taqz.consumer_key,
-            "consumer_secret" : taqz.consumer_secret,
-            "access_token_key" : account.token,
-            "access_token_secret": account.token_secret
-        }
-        require('./scripts/tweet')( client, status, account )
+    const account = accounts[0]
+    const client = {
+        "consumer_key" : taqz.consumer_key,
+        "consumer_secret" : taqz.consumer_secret,
+        "access_token_key" : account.token,
+        "access_token_secret": account.token_secret
     }
+    require('./scripts/tweet')( client, status, account )
 })
 .catch(err => { throw err })
