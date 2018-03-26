@@ -1,5 +1,6 @@
 # taqz
-TwitterをいじいじするNode.jsアプリ
+
+Misskey、TwitterおよびMastodonの、コマンドラインで動く簡単なクライアントです。
 
 ## Commands
 
@@ -23,17 +24,37 @@ TwitterをいじいじするNode.jsアプリ
   * `help`      ･･････ この内容を表示します。
 
 
-### Twitter
+### Misskey
 
-- `node twitter/<command>`
+- `node misskey/<command>`
   * `init`      ･･････ いちばんはじめに実行するコマンドです。
   * `account`   ･･････ 操作したいアカウントを追加するときに実行するコマンドです。
   * `list`      ･･････ 操作可能なアカウントIDを表示します。
-  * `tweet-simply (options)`  
+  * `post-simply (options)`  
             ･･････ 単純にツイートできます。
     * (options)
       *  `--id=, --username=, -n <username>`  
             ユーザーネーム(ID)を事前に設定できます。
+            カンマ,区切りで複数アカウントを指定できます。
+      *  `--file=, --path=, -f <filename>`  
+            ファイル名を指定し、その内容を投稿できます。
+      *  `--text=, --body=, -t <text>`  
+            本文を直接指定します。
+
+  * `help`      ･･････ この内容を表示します。
+
+
+### Mastodon
+
+- `node mstdn/<command>`
+  * `instance`  ･･････ インスタンスを登録します。いちばんはじめに実行するコマンドです。
+  * `account`   ･･････ 操作したいアカウントを追加するときに実行するコマンドです。
+  * `list`      ･･････ 操作可能なアカウントIDを表示します。
+  * `toot-simply (options)`  
+            ･･････ 単純にツイートできます。
+    * (options)
+      *  `--id=, --screem_name=, -n <username>`  
+            ユーザーネーム(ID@インスタンスドメイン)を事前に設定できます。
             カンマ,区切りで複数アカウントを指定できます。
       *  `--file=, --path=, -f <filename>`  
             ファイル名を指定し、その内容を投稿できます。

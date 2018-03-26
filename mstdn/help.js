@@ -1,13 +1,13 @@
 console.log(`
-node twitter/<command>
-  init      ･･････ いちばんはじめに実行するコマンドです。
+node mstdn/<command>
+  instance  ･･････ インスタンスを登録します。いちばんはじめに実行してください。
   account   ･･････ 操作したいアカウントを追加するときに実行するコマンドです。
   list      ･･････ 操作可能なアカウントIDを表示します。
-  tweet-simply (options)
+  toot-simply (options)
             ･･････ 単純にツイートできます。
     (options)
         --id=, --screen_name=, -n <screen_name>
-            スクリーンネームを事前に設定できます。
+            スクリーンネーム@サーバーを事前に設定できます。
             カンマ(,)区切りで複数アカウントを指定できます。
         --file=, --path=, -f <filename>
             ファイル名を指定し、その内容を投稿できます。

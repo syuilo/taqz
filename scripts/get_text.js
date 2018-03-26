@@ -19,7 +19,7 @@ async function get_text(argv, taqz){
         ]
         return inquirer.prompt(form)
         .then(as => {
-            return as.text
+            return as.text.replace('\\n', '\n')
         })
         .catch(err => { throw err })
     }

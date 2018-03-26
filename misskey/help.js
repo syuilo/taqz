@@ -8,7 +8,7 @@ node twitter/<command>
     (options)
         --id=, --username=, -n <username>
             ユーザーネーム(ID)を事前に設定できます。
-            カンマ,区切りで複数アカウントを指定できます。
+            カンマ(,)区切りで複数アカウントを指定できます。
         --file=, --path=, -f <filename>
             ファイル名を指定し、その内容を投稿できます。
         --text=, --body=, -t <text>

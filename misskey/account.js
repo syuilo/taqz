@@ -14,8 +14,7 @@ let session = {}
 
 request.post('https://api.misskey.xyz/auth/session/generate', { json: { 'app_secret': taqz.app_secret } },
     function(e, r, generate){
-        
-        if(e) throw Error(e)
+        if(e) throw e
         console.log('以下のURLにアクセスしてください。\n')
         console.log(generate.url + '\n')
         let form = [
@@ -30,7 +29,8 @@ request.post('https://api.misskey.xyz/auth/session/generate', { json: { 'app_sec
         .then(as => {
             if(as.yn == 'n') { console.log('操作を中止します'); return void(0) }
             request.post('https://api.misskey.xyz/auth/session/userkey', { json: {'app_secret': taqz.app_secret, 'token': generate.token} }, function (e, r, userkey) {
-
+                if(e) throw e
+                console.log(r)
                 const hashit = crypto.createHash('sha256')
                 hashit.update(`${userkey.access_token}${taqz.app_secret}`)
                 const i = hashit.digest('hex')
@@ -42,7 +42,7 @@ request.post('https://api.misskey.xyz/auth/session/generate', { json: { 'app_sec
                     id: userkey.user.id
                 })
                 fs.writeFile('misskey/taqz.json', JSON.stringify(rtaqz), 'utf8', (err) => { if(err) throw err })
-                console.log(`アカウント情報を登録しました。投稿などを行う際は、現在のユーザーネーム${userkey.screen_name}を指定してください。`)
+                console.log(`アカウント情報を登録しました。投稿などを行う際は、現在のユーザーネーム${userkey.user.username}を指定してください。`)
             })
         })
         .catch(err => { throw err })

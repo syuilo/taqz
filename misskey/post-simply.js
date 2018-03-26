@@ -3,7 +3,6 @@ const     promisify = util.promisify
 const            fs = require('fs')
 const      minimist = require('minimist')
 const       request = require('request')
-const      inquirer = require('inquirer')
 
 const readFile = promisify(fs.readFile)
 
