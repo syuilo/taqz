@@ -5,13 +5,14 @@ const      inquirer = require('inquirer')
 const     writeFile = promisify(fs.writeFile)
 const      Mastodon = require('mastodon-api')
 
-let baseUrl
+let domain
 
 let form = [
     {
         type: 'input',
-        name: 'baseUrl',
-        message: 'Instance Domain:'
+        name: 'domain',
+        message: 'Instance Domain:',
+        default: 'mstdn.jp'
     },
     {
         type: 'input',
@@ -23,18 +24,18 @@ let form = [
 console.log('\nインスタンスのドメインと、アプリ名を入力します。')
 inquirer.prompt(form)
 .then(as => {
-    baseUrl = as.baseUrl
-    return Mastodon.createOAuthApp(`https://${as.baseUrl}/api/v1/apps`, as.name, 'read write follow')
+    domain = as.domain
+    return Mastodon.createOAuthApp(`https://${as.domain}/api/v1/apps`, as.name, 'read write follow')
 })
 .then(body => {
     let data = { instances: {}, accounts:[] }
     try{
         let taqz = require('./taqz.json')
         let pdata = { instances: {} }
-        pdata.instances[baseUrl] = { app: body }
+        pdata.instances[domain] = { app: body }
         data = Object.assign(taqz, pdata)
     } catch(e) {
-        data.instances[baseUrl] = { app: body }
+        data.instances[domain] = { app: body }
     }
     return writeFile('mstdn/taqz.json', JSON.stringify(data), 'utf8', () => {
         console.log('taqz.jsonが作成されました。このファイルは絶対に誰にも見せないでください。')

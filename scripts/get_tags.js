@@ -1,7 +1,7 @@
 const      inquirer = require('inquirer')
 
 async function get_tags(argv, taqz){
-    if(argv.tags) return argv.tags
+    if(argv.tags || argv.tags == '') return argv.tags
     else if(argv.hashtags) return argv.hashtags
     else if(argv.h) return argv.h
     else {
@@ -22,6 +22,6 @@ async function get_tags(argv, taqz){
 module.exports = function(argv, taqz){
     return get_tags(argv, taqz)
     .then(tags => {
-        return tags.split(',')
+        return ( ( !tags || tags == '') ? null : tags.split(',') )
     })
 }

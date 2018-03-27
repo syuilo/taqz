@@ -1,18 +1,30 @@
-const          util = require('util')
-const     promisify = util.promisify
 const            fs = require('fs')
 const       request = require('request')
-const            qs = require('querystring')
 const      inquirer = require('inquirer')
 const        crypto = require('crypto')
 
-const taqz = require('./taqz.json') || null
-
-if(!taqz) throw Error('初期化されていません。 node misskey/init を実行し、初期化してください。')
+let taqz
+try{
+    taqz = require('./taqz.json')
+} catch(e) {
+    throw Error('初期化されていません。 node twitter/init を実行し、初期化してください。')
+}
 
 let session = {}
 
-request.post('https://api.misskey.xyz/auth/session/generate', { json: { 'app_secret': taqz.app_secret } },
+
+let form = [
+    {
+        type: 'list',
+        name: 'domain',
+        message: 'Instance Domain :',
+        choices: Object.keys(taqz.instances)
+    }
+]
+console.log('インスタンスのドメインを入力します。')
+inquirer.prompt(form)
+.then(as => {
+    request.post(`https://api.${as.domain}/auth/session/generate`, { json: { 'app_secret': taqz.instances[as.domain] } },
     function(e, r, generate){
         if(e) throw e
         console.log('以下のURLにアクセスしてください。\n')
@@ -26,24 +38,27 @@ request.post('https://api.misskey.xyz/auth/session/generate', { json: { 'app_sec
             }
         ]
         inquirer.prompt(form)
-        .then(as => {
-            if(as.yn == 'n') { console.log('操作を中止します'); return void(0) }
-            request.post('https://api.misskey.xyz/auth/session/userkey', { json: {'app_secret': taqz.app_secret, 'token': generate.token} }, function (e, r, userkey) {
+        .then(as2 => {
+            if(as2.yn == 'n') { console.log('操作を中止します'); return void(0) }
+            request.post(`https://api.${as.domain}/auth/session/userkey`, { json: {'app_secret': taqz.instances[as.domain], 'token': generate.token} }, function (e, r, userkey) {
                 if(e) throw e
-                console.log(r)
                 const hashit = crypto.createHash('sha256')
-                hashit.update(`${userkey.access_token}${taqz.app_secret}`)
+                hashit.update(`${userkey.access_token}${taqz.instances[as.domain]}`)
                 const i = hashit.digest('hex')
 
                 let rtaqz = require('./taqz.json')
                 rtaqz.accounts.push({
                     i: i,
                     username: userkey.user.username,
+                    name_domain: `${userkey.user.username}@${as.domain}`,
+                    domain: as.domain,
                     id: userkey.user.id
                 })
                 fs.writeFile('misskey/taqz.json', JSON.stringify(rtaqz), 'utf8', (err) => { if(err) throw err })
-                console.log(`アカウント情報を登録しました。投稿などを行う際は、現在のユーザーネーム${userkey.user.username}を指定してください。`)
+                console.log(`アカウント情報を登録しました。投稿などを行う際は、${userkey.user.username}@${as.domain} と指定してください。`)
             })
         })
         .catch(err => { throw err })
+    })
+
 })

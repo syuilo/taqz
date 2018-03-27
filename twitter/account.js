@@ -1,13 +1,14 @@
-const          util = require('util')
-const     promisify = util.promisify
 const            fs = require('fs')
 const       request = require('request')
 const            qs = require('querystring')
 const      inquirer = require('inquirer')
 
-const taqz = require('./taqz.json') || null
-
-if(!taqz) throw Error('初期化されていません。 node twitter/init を実行し、初期化してください。')
+let taqz
+try{
+    taqz = require('./taqz.json')
+} catch(e) {
+    throw Error('初期化されていません。 node twitter/init を実行し、初期化してください。')
+}
 
 const oauth = {
     consumer_key: taqz.consumer_key,
