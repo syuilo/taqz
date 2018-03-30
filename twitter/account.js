@@ -43,6 +43,13 @@ request.post('https://api.twitter.com/oauth/request_token',{ oauth: oauth },
             request.post('https://api.twitter.com/oauth/access_token', { oauth: oauth }, function (e, r, body) {
                 const perm_data = qs.parse(body)
                 let rtaqz = require('./taqz.json')
+                let ii = rtaqz.accounts.findIndex((val, i, arr) =>{
+                    return val.screen_name == perm_data.screen_name
+                })
+                if(ii >= 0){
+                    rtaqz.accounts.splice(ii, 1)
+                    console.log('同じ名前のアカウントが見つかりました。アカウントへのアクセス権は上書きされます。')
+                }
                 rtaqz.accounts.push({
                     user_id: perm_data.user_id,
                     screen_name: perm_data.screen_name,

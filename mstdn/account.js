@@ -9,7 +9,7 @@ let taqz
 try{
     taqz = require('./taqz.json')
 } catch(e) {
-    throw Error('初期化されていません。 node twitter/init を実行し、初期化してください。')
+    throw Error('初期化されていません。 node mstdn/init を実行し、初期化してください。')
 }
 
 let domain, id
@@ -57,6 +57,13 @@ inquirer.prompt(form)
     console.log('\n任意の識別文字列(ID)を入力します。スクリーンネームを入力するとよいでしょう。アカウントを指定するとき「ID@ドメイン」と指定してトゥートなどをします。')
     let as = await inquirer.prompt(form)
     id = as.id
+    let ii = rtaqz.accounts.findIndex((val, i, arr) =>{
+        return val.id == perm_data.id
+    })
+    if(ii >= 0){
+        rtaqz.accounts.splice(ii, 1)
+        console.log('同じ名前のアカウントが見つかりました。アカウントへのアクセス権は上書きされます。')
+    }
     rtaqz.accounts.push({
         id: `${as.id}@${domain}`,
         domain: domain,

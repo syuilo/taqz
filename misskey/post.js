@@ -4,9 +4,9 @@ let taqz
 try{
     taqz = require('./taqz.json')
 } catch(e) {
-    throw Error('初期化されていません。 node twitter/init を実行し、初期化してください。')
+    throw Error('初期化されていません。 node misskey/init を実行し、初期化してください。')
 }
-if(taqz.accounts.length == 0) throw Error('アカウントがありません。node twitter/account を実行し、アカウントを登録してください。')
+if(taqz.accounts.length == 0) throw Error('アカウントがありません。node misskey/account を実行し、アカウントを登録してください。')
 
 function post(argv){
     require('../scripts/get_accounts')(argv, taqz, 'name_domain')

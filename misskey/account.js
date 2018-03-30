@@ -7,7 +7,7 @@ let taqz
 try{
     taqz = require('./taqz.json')
 } catch(e) {
-    throw Error('初期化されていません。 node twitter/init を実行し、初期化してください。')
+    throw Error('初期化されていません。 node misskey/init を実行し、初期化してください。')
 }
 
 let session = {}
@@ -45,8 +45,14 @@ inquirer.prompt(form)
                 const hashit = crypto.createHash('sha256')
                 hashit.update(`${userkey.access_token}${taqz.instances[as.domain]}`)
                 const i = hashit.digest('hex')
-
                 let rtaqz = require('./taqz.json')
+                let ii = rtaqz.accounts.findIndex((val, i, arr) =>{
+                    return val.name_domain == `${userkey.user.username}@${as.domain}`
+                })
+                if(ii >= 0){
+                    rtaqz.accounts.splice(ii, 1)
+                    console.log('同じ名前のアカウントが見つかりました。アカウントへのアクセス権は上書きされます。')
+                }
                 rtaqz.accounts.push({
                     i: i,
                     username: userkey.user.username,
