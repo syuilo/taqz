@@ -9,7 +9,7 @@ let taqz
 try{
     taqz = require('./taqz.json')
 } catch(e) {
-    throw Error('初期化されていません。 node mstdn/init を実行し、初期化してください。')
+    throw Error('初期化されていません。 node mstdn/instance を実行し、初期化してください。')
 }
 
 let domain, id

@@ -7,13 +7,14 @@ const      inquirer = require('inquirer')
 const     websocket = require('websocket')
 
 const readFile = promisify(fs.readFile)
-const taqz = (function(){
-    try{
-        return require('./taqz.json')
-    } catch(e) {
-        throw Error('初期化されていません。 node misskey/init を実行し、初期化してください。')
-    }
-})()
+
+const taqz = require('./taqz.json')
+
+try{
+    taqz = require('./taqz.json')
+} catch(e) {
+    throw Error('初期化されていません。 node misskey/init を実行し、初期化してください。')
+}
 if(taqz.accounts.length == 0) throw Error('アカウントがありません。node misskey/account を実行し、アカウントを登録してください。')
 
 const argv = minimist(process.argv.slice(1))
@@ -34,10 +35,9 @@ require('../scripts/get_accounts')(argv, taqz, 'username')
 .then(async accounts => {
     for(n = 0; n < accounts.length; n++){
         const account = accounts[n]
-        request.post('https://misskey.xyz/api/notes/timeline', {json: {i: account.i}}, (err, res, body) => {
+        request.post('https://api.misskey.xyz/posts/timeline', {json: {i: account.i}}, (err, res, body) => {
             if(err) throw err
             else {
-                console.log(body)
                 body.reverse()
                 for(i = 0; i < body.length; i++){
                     display.post(body[i])
@@ -62,12 +62,12 @@ require('../scripts/get_accounts')(argv, taqz, 'username')
             connection.on('message', function(message) {
                 if (message.type === 'utf8') {
                     const data = JSON.parse(message.utf8Data)
-                    if(data.type == 'note') display.post(data.body)
+                    if(data.type == 'post') display.post(data.body)
                 }
             })
 
         })
-        client.connect(`wss://misskey.xyz/?i=${account.i}`);
+        client.connect(`wss://api.misskey.xyz/?i=${account.i}`);
     }
 })
 .catch(err => { throw err })

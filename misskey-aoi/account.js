@@ -7,7 +7,7 @@ let taqz
 try{
     taqz = require('./taqz.json')
 } catch(e) {
-    throw Error('初期化されていません。 node misskey/instance を実行し、初期化してください。')
+    throw Error('初期化されていません。 node misskey/init を実行し、初期化してください。')
 }
 
 let session = {}
@@ -24,7 +24,7 @@ let form = [
 console.log('インスタンスのドメインを入力します。')
 inquirer.prompt(form)
 .then(as => {
-    request.post(`https://${as.domain}/api/auth/session/generate`, { json: { 'appSecret': taqz.instances[as.domain] } },
+    request.post(`https://api.${as.domain}/auth/session/generate`, { json: { 'app_secret': taqz.instances[as.domain] } },
     function(e, r, generate){
         if(e) throw e
         console.log('以下のURLにアクセスしてください。\n')
@@ -40,7 +40,7 @@ inquirer.prompt(form)
         inquirer.prompt(form)
         .then(as2 => {
             if(as2.yn == 'n') { console.log('操作を中止します'); return void(0) }
-            request.post(`https://${as.domain}/api/auth/session/userkey`, { json: {'appSecret': taqz.instances[as.domain], 'token': generate.token} }, function (e, r, userkey) {
+            request.post(`https://api.${as.domain}/auth/session/userkey`, { json: {'app_secret': taqz.instances[as.domain], 'token': generate.token} }, function (e, r, userkey) {
                 if(e) throw e
                 const hashit = crypto.createHash('sha256')
                 hashit.update(`${userkey.access_token}${taqz.instances[as.domain]}`)

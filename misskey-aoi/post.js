@@ -19,7 +19,7 @@ function post(argv){
             let json = {i: account.i, text: text}
             if(tags != null) json.tags = tags
             arg.push(new Promise(function(resolve, reject){
-                request.post('https://misskey.xyz/api/posts/create', {json: json}, (err) => {
+                request.post('https://api.misskey.xyz/posts/create', {json: json}, (err) => {
                     if(err) reject(err)
                     else{
                         console.log(`\n✔ [Misskey]  投稿しました。 @${account.name_domain}`)

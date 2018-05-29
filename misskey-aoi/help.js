@@ -1,5 +1,6 @@
 console.log(`
-node misskey/<command>
+node misskey-aoi/<command>
+  Misskey (aoi)用のクライアントです。
   instance  ･･････ インスタンスを登録します。いちばんはじめに実行してください。
   account   ･･････ 操作したいアカウントを追加するときに実行するコマンドです。
   list      ･･････ 操作可能なアカウントIDを表示します。

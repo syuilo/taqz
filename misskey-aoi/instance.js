@@ -25,7 +25,7 @@ inquirer.prompt(form)
             message: 'App Secret:'
         }
     ]
-    console.log(`\nhttps://${domain}/dev にアクセスし、アプリを作成してください。\nそして、以下の情報を貼り付けてください。`)
+    console.log(`\nhttps://dev.${domain}/apps にアクセスし、アプリを作成してください。\nそして、以下の情報を貼り付けてください。`)  // MISSKEY_AOI
     return inquirer.prompt(form)
 })
 .then(as => {
